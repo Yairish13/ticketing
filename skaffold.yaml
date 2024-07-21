@@ -1,0 +1,64 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./infra/k8s/*
+build:
+  local:
+    push: false
+  artifacts:
+    - image: yairish13/auth
+      context: auth
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: yairish13/client
+      context: client
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "**/*.js"
+            dest: .
+    - image: yairish13/tickets
+      context: tickets
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+    - image: yairish13/orders
+      context: orders
+      docker:
+        dockerfile: Dockerfile
+      sync:
+        manual:
+          - src: "src/**/*.ts"
+            dest: .
+# apiVersion: skaffold/v2alpha3
+# kind: Config
+# deploy:
+#   kubectl:
+#     manifests:
+#       - ./infra/k8s/*
+# build:
+#   local:
+#     push: false
+#   # googleCloudBuild:
+#   #   projectId: ticketing-dev-400618
+#   artifacts:
+#     - image: yairish13/auth
+#     # - image: us.gcr.io/ticketing-dev-400618/auth
+#       context: auth
+#       docker:
+#         dockerfile: Dockerfile
+#       sync:
+#         manual:
+#           - src: 'src/**/*.ts'
+#             dest: .
+
