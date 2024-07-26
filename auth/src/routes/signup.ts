@@ -16,7 +16,6 @@ router.post('/api/users/signup', signupValidation, validateRequest, async (req: 
 
     const user = User.build({ email, password });
     // const users = await User.find({}).exec();
-    // console.log(users, 'users');
     await user.save();
 
     //Generate a JWT
